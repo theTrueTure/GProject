@@ -1,23 +1,48 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from './counter'
+import { createApi } from 'unsplash-js';
+import * as nodeFetch from 'node-fetch';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const polyfillLibrary = require('polyfill-library');
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const polyfillBundle = polyfillLibrary.getPolyfillString({
+  uaString: 'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)',
+  minify: true,
+  features: {
+    es6: { flags: ['gated'] },
+  },
+}).then(bundleString => {
+  console.log(bundleString);
+});
+
+const unsplash = createApi({
+  accessKey: '5vcBJ_NanyB5xxCKoPCfkrIURjCnfB9TQY2vKGeABXA',
+  fetch: nodeFetch.default as unknown as typeof fetch,
+});
+
+unsplash.users.getPhotos({ username: 'foo' }).then(result => {
+  if (result.errors) {
+    console.log('error occurred: ', result.errors[0]);
+  } else {
+    const feed = result.response;
+
+    const { total, results } = feed;
+
+    console.log(`received ${results.length} photos out of ${total}`);
+    console.log('first photo: ', results[0]);
+  }
+});
+
+// import * as Unsplash from 'unsplash-js';
+
+// const unsplashImages = new Unsplash({
+//   applicationId: '{5vcBJ_NanyB5xxCKoPCfkrIURjCnfB9TQY2vKGeABXA}',
+//   secret: '{zU28LnpimqAgTDRPP4W6r2TU4b0Zh9XKN2fN7Kc5Qgo}',
+// });
+// unsplashImages.search.photos('cats', 1)
+//   .then((res: any) => res.json())
+//   .then((json: any) => {
+//     const imgUrl = json.results.urls.regular;
+//     console.log(imgUrl, 'HEREEE', json);
+//     document.querySelector<HTMLDivElement>('#app')!.innerHTML = `<img href=${imgUrl}>`;
+//   });
+
+// // export default main;
