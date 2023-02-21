@@ -7,10 +7,8 @@ type State = {
 
 let state: State = {
   searchHistory: [],
-  currentSearch: '',
+  currentSearch: 'cat',
 };
-
-const sth = state.currentSearch;
 
 const update = (newState : State) => {
   state = { ...state, ...newState };
@@ -18,7 +16,7 @@ const update = (newState : State) => {
 };
 
 const unsplash = createApi({
-  accessKey: '5vcBJ_NanyB5xxCKoPCfkrIURjCnfB9TQY2vKGeABXA',
+  accessKey: 'O3jf0Le_tBem9sMo0Y2Nlis9VKNAVqEsTDPUzZWetb4',
 });
 
 const htmlSearch = document.getElementById('searchButton') as HTMLButtonElement;
@@ -37,7 +35,9 @@ export const fetchingPhotos = async (keyword:string) => {
 };
 
 const addtoDom = async () => {
-  const unsplashObj = await fetchingPhotos(sth);
+  const unsplashObj = await fetchingPhotos(state.currentSearch);
+  const imgsElement = document.querySelector('#app') as HTMLDivElement;
+  imgsElement.innerHTML = '';
   unsplashObj
     .response?.results.forEach(item => {
       const imgElement = document.createElement('img');

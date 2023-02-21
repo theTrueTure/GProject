@@ -44,10 +44,6 @@ input {
   transition: 99s ease-out;
 }
 
-input:hover, :focus {
-  width: 90%;
-}
-
 .button-2 {
   border-radius: 8px;
   display: inline-block;
