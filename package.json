@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "jest src/main.test.ts",
     "dev": "vite",
     "lint": "eslint ./src/**/*.ts",
     "lint-watch": "nodemon --exec 'npm run lint --silent'",

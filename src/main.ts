@@ -7,11 +7,13 @@ type State = {
 
 let state: State = {
   searchHistory: [],
-  currentSearch: 'cat',
+  currentSearch: '',
 };
 
+const sth = state.currentSearch;
+
 const update = (newState : State) => {
-  state = { ...state, ...newState }; // patch state, overwrite old data with new properties
+  state = { ...state, ...newState };
   window.dispatchEvent(new Event('statechange'));
 };
 
@@ -27,19 +29,21 @@ htmlSearch.addEventListener('click', () => {
   update({ searchHistory: state.searchHistory, currentSearch: textValue });
 });
 
-const fetchingPhotos = () => {
-  unsplash.search
-    .getPhotos({ query: state.currentSearch, orientation: 'landscape' })
-    .then(result => {
-      document.querySelector<HTMLDivElement>('#app')!.innerHTML = '';
-      result.response?.results.forEach(item => {
-        const imgElement = document.createElement('img');
-        imgElement.setAttribute('src', item.urls.small);
-        imgElement.setAttribute('alt', item.alt_description || 'no information for this image');
-        document.querySelector<HTMLDivElement>('#app')!.append(imgElement);
-      });
-    })
-    .catch(() => {
+export const fetchingPhotos = async (keyword:string) => {
+  const unsplashObj = await unsplash.search
+    .getPhotos({ query: keyword, orientation: 'landscape' })
+    .then(result => result);
+  return unsplashObj;
+};
+
+const addtoDom = async () => {
+  const unsplashObj = await fetchingPhotos(sth);
+  unsplashObj
+    .response?.results.forEach(item => {
+      const imgElement = document.createElement('img');
+      imgElement.setAttribute('src', item.urls.small);
+      imgElement.setAttribute('alt', item.alt_description || 'no information for this image');
+      document.querySelector<HTMLDivElement>('#app')!.append(imgElement);
     });
 };
 
@@ -58,7 +62,7 @@ const searchSuggestion = () => {
 searchSuggestion();
 
 window.addEventListener('statechange', () => {
-  fetchingPhotos();
+  addtoDom();
 });
 
 export default {};
