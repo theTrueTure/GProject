@@ -1,0 +1,39 @@
+* {
+  background-color: white;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+nav .header__nav {
+  position: sticky;
+  background-color: aquamarine; 
+}
+
+.header__ul {
+  background-color: aquamarine;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header__links a{
+  text-decoration: none;
+  color: black;
+  border: solid black 1px;
+  background-color: aquamarine;
+}
+
+/* CSS */
+.button-2 {
+  border-radius: 8px;
+  border-width: 0;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  touch-action: manipulation;
+}
