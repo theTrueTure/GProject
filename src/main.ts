@@ -29,7 +29,7 @@ htmlSearch.addEventListener('click', () => {
 
 const fetchingPhotos = () => {
   unsplash.search
-    .getPhotos({ query: state.currentSearch, orientation: 'landscape', perPage: 9 })
+    .getPhotos({ query: state.currentSearch, orientation: 'landscape' })
     .then(result => {
       document.querySelector<HTMLDivElement>('#app')!.innerHTML = '';
       result.response?.results.forEach(item => {
@@ -60,3 +60,5 @@ searchSuggestion();
 window.addEventListener('statechange', () => {
   fetchingPhotos();
 });
+
+export default {};
