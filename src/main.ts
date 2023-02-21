@@ -18,12 +18,9 @@ const htmlSearch = document.getElementById('searchButton') as HTMLButtonElement;
 htmlSearch.addEventListener('click', () => {
   const searchInput = document.getElementById('searchText') as HTMLInputElement;
   const textValue = searchInput.value;
-  const clientSearch = document.getElementById('demo') as HTMLParagraphElement;
-  clientSearch.innerHTML = textValue;
   state.searchHistory.push(textValue);
   update({ searchHistory: state.searchHistory, currentSearch: textValue })
   console.log(state.searchHistory)
-  // state.searchHistory.push(textValue);
 });
 
 const fetchingPhotos = () => {
@@ -35,8 +32,8 @@ const fetchingPhotos = () => {
       result.response?.results.map(item => {
         const imgElement = document.createElement('img');
         imgElement.setAttribute('src', item.urls.small);
+        imgElement.setAttribute('alt', item.alt_description || "no information for this image")
         document.querySelector<HTMLDivElement>('#app')!.append(imgElement);
-        return item;
       });
     })
     .catch(() => {
@@ -52,3 +49,16 @@ window.addEventListener('statechange', () => {
   fetchingPhotos();
 })
 
+const searchSuggestion = () => {
+  const suggestionsElement = document.getElementById('searchText')
+  suggestionsElement?.addEventListener('focus', () => {
+    const ulElement = document.getElementById('suggestionList') as HTMLUListElement
+    ulElement.innerHTML = ''
+    state.searchHistory.map(item => {
+      const liElement = document.createElement('li')
+      liElement.innerHTML = item;
+      ulElement.append(liElement);
+    })
+  })
+}
+searchSuggestion();
