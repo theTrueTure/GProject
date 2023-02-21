@@ -32,7 +32,7 @@ const fetchingPhotos = () => {
     .getPhotos({ query: state.currentSearch, orientation: 'landscape', perPage: 9 })
     .then(result => {
       document.querySelector<HTMLDivElement>('#app')!.innerHTML = '';
-      result.response?.results.map(item => {
+      result.response?.results.forEach(item => {
         const imgElement = document.createElement('img');
         imgElement.setAttribute('src', item.urls.small);
         imgElement.setAttribute('alt', item.alt_description || 'no information for this image');
@@ -48,7 +48,7 @@ const searchSuggestion = () => {
   suggestionsElement?.addEventListener('focus', () => {
     const ulElement = document.getElementById('suggestionList') as HTMLUListElement;
     ulElement.innerHTML = '';
-    state.searchHistory.map(item => {
+    state.searchHistory.forEach(item => {
       const liElement = document.createElement('li');
       liElement.innerHTML = item;
       ulElement.append(liElement);
