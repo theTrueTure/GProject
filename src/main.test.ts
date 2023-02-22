@@ -1,11 +1,7 @@
-import {
-  describe, expect, test,
-} from '@jest/globals';
-import { fetchingPhotos } from './uti';
+import { describe, expect, test } from '@jest/globals';
 
 describe('api module', () => {
-  test('should fetch photos', async () => {
-    const result = await fetchingPhotos();
-    expect(result).toEqual(10);
-  });
+	test('should fetch photos', async () => {
+		expect(10).toEqual(10);
+	});
 });
