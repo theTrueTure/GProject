@@ -4,7 +4,7 @@ on:
   push:
     branches: [development]
   pull_request:
-    branches: [development]
+    branches: [main]
 
 jobs:
   build:
@@ -17,10 +17,9 @@ jobs:
         with:
           node-version: '16.x'
       - run: npm ci
+      - run: npm run lint
+      - run: npm test
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
           start: npm run dev
-      - run: npm test
-      - run: npm run lint
-      - run: npm run e2e
