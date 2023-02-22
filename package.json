@@ -10,7 +10,7 @@
     "lint-watch": "nodemon --exec 'npm run lint --silent'",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "e2e": "cypress open"
+    "e2e": "cypress run"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
